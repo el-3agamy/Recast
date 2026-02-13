@@ -1,0 +1,309 @@
+// // import { Collection } from './components/Collection.js';
+// // import { ProductHero } from './components/ProductHero.js';
+
+// import { Collection } from "./components/Collection.js";
+// import { Gallery } from "./components/Gallery.js";
+// import { ProductDetails } from "./components/ProductDetails.js";
+
+// // export class App {
+// //     constructor(root) {
+// //         this.root = root;
+// //         this.state = { cartCount: 0, product: null, collection: [] };
+// //     }
+
+// //     async init() {
+// //         // Fetch data once at the top level
+// //         const response = await fetch('./data.json');
+// //         const data = await response.json();
+        
+// //         this.state.product = data.mainProduct;
+// //         this.state.collection = data.collection;
+
+// //         this.render();
+// //     }
+
+// //     // This acts like the "Add to Cart" handler passed down to children
+// //     updateCart = () => {
+// //         this.state.cartCount++;
+// //         document.querySelector('.cart-count').innerText = this.state.cartCount;
+// //     }
+
+// //     render() {
+// //         this.root.innerHTML = ''; // Clear root
+        
+// //         // Initialize sub-components (smaller classes)
+// //         const hero = new ProductHero(this.state.product, this.updateCart);
+// //         const collection = new Collection(this.state.collection);
+
+// //         // Append their rendered HTML
+// //         this.root.appendChild(hero.render());
+// //         this.root.appendChild(collection.render());
+// //     }
+// // }
+
+// const gallery = new Gallery() ;
+// const detailsOfProducts = new ProductDetails() ;
+// const ringCollection = new Collection() ;
+// export class ProductPage {
+//     constructor(containerId) {
+//         this.container = document.getElementById(containerId);
+//         this.state = {
+//             product: null,
+//             collection: [],
+//             selectedSize: null,
+//             cartCount: 0
+//         };
+//     }
+
+//     // 1. Initialize the Application
+//     async init() {
+//         const data = await this.fetchData();
+
+//         if (data) {
+//             this.state.product = data.mainProduct;
+//             this.state.collection = data.collection;
+//             this.render();
+//             this.initEventListeners();
+//         }
+//     }
+
+//     // 2. Fetch Dynamic Data (Requirement: No hard-coding in HTML)
+//     async fetchData() {
+//         try {
+//             const response = await fetch('./data.json');
+//             // if (!response.ok) throw new Error('Network response was not ok');
+//             const json = await response.json();
+//             return json; 
+//         } catch (error) {
+//             console.log("Error: " , error);
+//             return null;
+//         }
+//     }
+
+//     // 3. Central Render Method (Requirement: Modular UI rendering)
+//    render() {
+//         this.container.innerHTML = `
+//             <div class="product-page-layout">
+//                 <section class="gallery-section"></section>
+//                 <section class="details-section"></section>
+//             </div>
+//             <section class="collection-section">
+//                 <h2>${this.state.collection?.collectionName || ''}</h2>
+//                 <div class="ring-collection-inner"></div>
+//                 <button class="shop-all-btn">Shop Rings</button>
+//             </section>
+//         `;
+
+//         // Pass the correct slices of state to each component
+//         gallery.renderGallery(this.state.product.images);
+//         detailsOfProducts.renderMainProduct(this.state.product);
+//         ringCollection.renderCollection(this.state.collection);
+//     }
+
+//     // 4. Render the Hero Gallery (Grid Layout)
+//     // renderGallery() {
+//     //     const p = this.state.product;
+//     //     const galleryContainer = document.querySelector('.gallery-section');
+
+//     //     galleryContainer.innerHTML = `
+//     //         <div class="product-gallery">
+//     //             <img src="${p.images.main}" class="main-feature-img" alt="Main View">
+//     //             <div class="sub-gallery">
+//     //                 ${p.images.gallery.map(img => `<img src="${img}" alt="Gallery View">`).join('')}
+//     //             </div>
+//     //         </div>
+//     //     `;
+//     // }
+
+//     // 5. Render Product Details (Requirement: Dynamic system for product rendering)
+//     renderMainProduct() {
+//         const p = this.state.product;
+//         const detailsContainer = document.querySelector('.details-section');
+
+//         const statsHTML = p.stats.map(stat => `
+//             <div class="stat-item">
+//                 <span class="label">${stat.label}</span>
+//                 <span class="value">${stat.value}</span>
+//                 <p class="desc">${stat.desc}</p>
+//             </div>
+//         `).join('');
+
+//         detailsContainer.innerHTML = `
+//             <div class="product-header">
+//                 <h1>${p.name}</h1>
+//                 <p class="price">$${p.price.toLocaleString()}</p>
+//             </div>
+//             <p class="description">${p.description}</p>
+
+//             <div class="spec-section">
+//                 <span>Piece Specifications</span>
+//                 <p>${p.specifications}</p>
+//             </div>
+
+//             <div class="product-stats-grid">${statsHTML}</div>
+
+//             <div class="size-selector">
+//                 <span>Size</span>
+//                 <div class="size-grid">
+//                     ${p.sizes.map(size => `<button class="size-btn">${size}</button>`).join('')}
+//                 </div>
+//             </div>
+
+//             <div class="actions">
+//                 <button class="btn-add-cart">Add To Cart</button>
+//                 <button class="btn-wishlist">♡</button>
+//             </div>
+//         `;
+//     }
+
+//     // 6. Render the Bottom Collection Section
+//     renderCollection() {
+//         const collectionContainer = document.querySelector('.ring-collection-inner');
+
+//         collectionContainer.innerHTML = this.state.collection.collectionProducts.map(item => `
+//             <div class="collection-item">
+//                 <img src="${item.img}" alt="${item.name}">
+//                 <p>${item.name}</p>
+//                 <span>$${item.price.toLocaleString()}</span>
+//             </div>
+//         `).join('');
+//     }
+
+//     // 7. Event Listeners (Requirement: Update local state and reflect in UI)
+//     initEventListeners() {
+//         // Size Selection Logic
+//         const sizeGrid = document.querySelector('.size-grid');
+//         sizeGrid.addEventListener('click', (e) => {
+//             if (e.target.classList.contains('size-btn')) {
+//                 // Remove active class from all
+//                 document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+//                 // Add to clicked
+//                 e.target.classList.add('active');
+//                 this.state.selectedSize = e.target.innerText;
+//             }
+//         });
+
+//         // Add to Cart Logic
+//         const addBtn = document.querySelector('.btn-add-cart');
+//         addBtn.addEventListener('click', () => {
+//             if (!this.state.selectedSize) {
+//                 alert("Please select a size first.");
+//                 return;
+//             }
+//             this.state.cartCount++;
+//             this.updateCartUI();
+//         });
+//     }
+
+//     // Requirement: reflect changes in UI dynamically (cart count)
+//     updateCartUI() {
+//         const cartCountEl = document.querySelector('.cart-count-value');
+//         if (cartCountEl) {
+//             cartCountEl.innerText = this.state.cartCount;
+//         }
+//     }
+// }
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+// class declartion  == class statement 
+class Test {  // Hoisting in TDZ  // Members vs Fields (public , private) vs Properties 
+    // Fields : which type consist of (which describe the Type) like  : name , age , ....etc 
+    // Methods : it's purpose to deal with Fields via it 
+    // public Fields : meaning it's accessiable outside the class (surly using an instance object) .
+    // to define public fields : you use "this" keywords inside the constructor Member .
+    // Private  Fields (you define it inside scope of class direct  using #) : meaning it's NOT accessiable outside the class (you can't access it  using an instance object) .
+    // constructor to initialize Member fields
+    // Types of methods inside class : 1) instance method ---------  2) static methods (type methods)
+    // we create properties using accessors like : 1) set   2)get
+    // classes are types 
+    //   type == class contain :1) fields 2)properties  3)constructor  4)methods 
+    // you can't call the class like the function :(without "new" keyword)
+    // there is no constructor overloading because js is Interpreted . => js is override .
+    // Pros of Making Fields Public: easy to deal with them  ( Simplicity )
+    // cons of making Fields Public: any one can change them (there is no secure / protection for Fields)  
+    // Pros of Private (hashed) Fields : Protecred them . ( Protection which meaning i can add Vaildation )
+    // cons of Private fields : Cann't access them ever outside the class even you can't console them (in the node but in the browser you can log them  ) !!!
+    //      so we how we can deal with private fields ?!
+    // by using Public Members which the only things response to deal with specific Private Field .
+    // what is meaning of Member ?! ==> it's method (especific it's Public Method so we can access it outside the class) in side the Class .
+    // so we will do : 
+            //  1) Make Fields Private , 
+            //  2) then deal with them via Public Members .
+            // and that called :Abstraction =>show what is nessecary and hide the complexity 
+            // and also acheive : Encupsulation => putting Fields with Methods in same Container (which here is the class ) and make fields Private.
+    #id  = 0 ;
+    constructor(_id, _name) {
+        // In your current snippet, the condition does work during the initial setup:
+        // If you call new MyClass(-5, "Gemini"), the ID will correctly be set to 0.
+        // The Problem: Because this.ID is a public property, I can simply write myObj.ID = -500; on the next line, and your class won't stop me.
+        /*
+            The Fix: Use Getters and Setters
+            To truly enforce a condition in JavaScript, you should use Private Fields (marked with a #) and a Setter.
+            This ensures that the logic runs every time the value is assigned, not just at the start.
+        */
+        // if (_id >= 0) {
+
+        //     this.ID = _id; // ID is Public Fields .
+        // } if (_id < 0) {
+        //     this.ID = 0; // ID is Public Fields .
+
+        // }
+
+        // So how we can mix Simplicity of Public fields with Protection of Private Fields :
+        //     by using new member called  Properties .
+        //     what are Properties ?
+        //          it's declared like methods using two accessor : 1) get  or 2)set ; but used like fields .( easir syntax ) 
+        // naming convention is to make name of field same for properties started with captial letter .
+        // Instance Methods ( Instance level / scope ) are class members  : callable via instances ( objects which created from Class ) ; important point : it's values change / depend on instance which call it .
+        // Type Methods (type scope / level) : which calling via Type ( class name ) directly not via Instance of class .v and it called / named " static methods " ; that's level up .
+        //     how to make it ? => by adding "static" keyword before any method.
+        // so when to use static methods ? => when values of its return not depend on the caller . 
+
+        
+        // this.#id = _id ;
+        this.Id = _id ; // why why assgin field using property ? => because it has validation we need acheive .
+                        // so why we don't make validation inside Constructor ?
+                        // it;s will work , but that's not correct to do => the only objective of constructor is Initialize new instance .
+        this.Name = _name;
+
+    } ;
+
+    get Id(){
+        return this.#id ;
+    } ;
+
+    set Id(_val){
+        if(_val >=0){
+            this.#id = _val ;
+        } 
+    }
+    
+    static showBranchName (){  // there is no exist for showBranchName in any instance , just it exist one time in type ( class ) Test
+        return "Tanta Branch" ;
+    }
+};
+
+const said = new Test(-1, "said");
+console.log(said);
+console.log(said.Id); // access it only via Public Member ; THe main advantge is  : to you can write condition inside this method and (that's what seek to acheive) excuted every time you change / set the Private Field :  
+said.Id = -9; // change it only via Public Member .
+console.log(said.Id); 
+said.Id = 3 ;
+console.log(said.Id);
+console.log(Test.showBranchName());
+
+
+
+
+// said.#id = -1;
+// console.log(said);
+
+
+
+
+
+
+const Test2 = class {
+
+}

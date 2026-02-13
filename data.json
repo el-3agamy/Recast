@@ -1,0 +1,41 @@
+{
+  "mainProduct": {
+    "name": "The Lexic Cuf Ring",
+    "price": 6990,
+    "count" : 10 ,
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "specifications": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "stats": [
+      {"label": "Gold", "value": "18k", "desc": "Lorem ipsum..."},
+      {"label": "Diamond", "value": "2.4c", "desc": "Lorem ipsum..."},
+      {"label": "Clarity", "value": "92%", "desc": "Lorem ipsum..."}
+    ],
+    "images": {
+       "main": "./assets/productImages/main_img.png",
+       "gallery": [
+          "./assets/productImages/Screenshot 2025-12-27 at 1.57.06 PM 3.png", 
+          "./assets/productImages/Screenshot 2025-12-27 at 11.27.12 PM 1.png", 
+          "./assets/productImages/Screenshot 2025-12-27 at 11.27.35 PM 1.png"
+        ]
+    },
+
+    "colors" : [
+      "./assets/colors/Untitled+design+(33) 3.png" ,
+      "./assets/colors/Untitled+design+(33) 4.png" ,
+      "./assets/colors/Untitled+design+(33) 5.png" 
+    ]
+    ,
+    "sizes": [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5]
+  },
+  
+  "collection":  {  
+
+        "collectionName" : "Ring Collection",
+        "collectionProducts" : [
+    {"name": "First Product Name", "price": 1500, "img": "./assets/collectionImages/NAB_7060 1.png"},
+    {"name": "Second Product Name", "price": 1500, "img": "./assets/collectionImages/NAB_7073 1.png"} ,
+    {"name": "First Product Name", "price": 1500, "img": "./assets/collectionImages/NAB_7921 1.png"},
+    {"name": "Second Product Name", "price": 1500, "img": "./assets/collectionImages/NAB_7956 1.png"} 
+  ]
+}
+}
