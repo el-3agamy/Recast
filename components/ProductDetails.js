@@ -1,4 +1,4 @@
-export class ProductDetails{
+export class ProductDetails {
     renderMainProduct(details) {
         const detailsContainer = document.querySelector('.details-section');
 
@@ -24,9 +24,20 @@ export class ProductDetails{
 
             <div class="product-stats-grid">${statsHTML}</div>
 
+            <div class="color-selector">
+                <span>Color</span>
+                <div class="color-options">
+                     ${details.colors ? details.colors.map((colorSrc, index) => `
+                        <div class="color-option ${index === 0 ? 'active' : ''}">
+                            <img src="${colorSrc}" alt="Color Option ${index + 1}">
+                        </div>
+                     `).join('') : ''}
+                </div>
+            </div>
+
             <div class="size-selector">
                 <span>Size</span>
-                <div class="size-grid">
+                <div class="size-btn-container">
                     ${details.sizes.map(size => `<button class="size-btn">${size}</button>`).join('')}
                 </div>
             </div>
