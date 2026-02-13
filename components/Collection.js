@@ -3,7 +3,6 @@ export class Collection {
         const container = document.querySelector('.ring-collection-inner');
         if (!container || !collectionData) return;
 
-        // Note: Use the property name from your JSON (collectionProducts)
         container.innerHTML = collectionData.collectionProducts.map(item => `
             <div class="collection-item">
                 <div class="img-wrapper">

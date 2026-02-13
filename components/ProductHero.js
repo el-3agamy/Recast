@@ -12,7 +12,6 @@ export class ProductHero {
             <button id="add-btn">Add To Cart</button>
         `;
 
-        // Attach event listener directly to this component's button
         section.querySelector('#add-btn').onclick = this.onAddToCart;
         
         return section;

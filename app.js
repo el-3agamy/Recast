@@ -41,7 +41,6 @@ export class ProductPage {
     render() {
         if (!this.container) return;
 
-        // 1. Create the skeleton
         this.container.innerHTML = `
             <div class="product-page-layout">
                 <section class="gallery-section"></section>
@@ -54,14 +53,12 @@ export class ProductPage {
             </section>
         `;
 
-        // 2. Tell the other classes to fill in the sections
         gallery.renderGallery(this.state.product.images);
         detailsOfProducts.renderMainProduct(this.state.product);
         ringCollection.renderCollection(this.state.collection);
     }
 
     initEventListeners() {
-        // Size Selection
         const sizeGrid = document.querySelector('.size-grid');
         if (sizeGrid) {
             sizeGrid.addEventListener('click', (e) => {
@@ -73,7 +70,6 @@ export class ProductPage {
             });
         }
 
-        // Add to Cart
         const addBtn = document.querySelector('.btn-add-cart');
         if (addBtn) {
             addBtn.addEventListener('click', () => {
